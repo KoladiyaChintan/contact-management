@@ -35,7 +35,7 @@ export class JwtHelper {
 
       return session.userRegister;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       return false;
     }
   }

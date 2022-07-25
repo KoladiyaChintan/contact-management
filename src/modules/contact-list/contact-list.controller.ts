@@ -33,8 +33,8 @@ export class ContactListController {
     return { data };
   }
 
-  @Get('getuser')
-  async getuser(
+  @Get('getlist')
+  async getlist(
     @User() tokenDto: JwtTokenInterface,
   ): Promise<SuccessResponse<any>> {
     const data = await this.contactListService.getall(tokenDto);
@@ -43,7 +43,6 @@ export class ContactListController {
 
   @Put('update/:id')
   async update(
-    @User() tokenDto: JwtTokenInterface,
     @Param('id') id: string,
     @Body() contactListDto: ContactListDto,
   ): Promise<SuccessResponse<any>> {
@@ -52,10 +51,7 @@ export class ContactListController {
   }
 
   @Delete('delete/:id')
-  async delete(
-    @User() tokenDto: JwtTokenInterface,
-    @Param('id') id: string,
-  ): Promise<SuccessResponse<any>> {
+  async delete(@Param('id') id: string): Promise<SuccessResponse<any>> {
     const data = await this.contactListService.delete(id);
     return { data };
   }

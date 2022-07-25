@@ -5,7 +5,6 @@ import { JwtTokenInterface } from 'src/interfaces/jwt.token.interface';
 import { JwtHelper } from 'src/utils/jwt.helper';
 import { LoginDto } from './dto/login.request.dto';
 import * as bcrypt from 'bcrypt';
-import { SuccessResponse } from 'src/interfaces/responce.interface';
 import { LoginResponceDto } from './dto/login.responce.dto';
 
 @Injectable()
@@ -23,11 +22,9 @@ export class LoginService {
       where: { email: loginDto.email },
       raw: true,
     });
-    console.log(user);
+    // console.log(user);
     if (!user) {
-      throw new BadRequestException(
-        'your login information is incorrect . try again',
-      );
+      throw new BadRequestException('your email is incorrect . try again');
     }
 
     const tokenDto: JwtTokenInterface = {
@@ -39,8 +36,7 @@ export class LoginService {
     try {
       if (await bcrypt.compare(loginDto.password, user.password)) {
         const token = await this.jwtHelper.generateToken(tokenDto);
-        // console.log(token);
-        // console.log(user.id);
+
         await this.USER_SESSION_REPOSITORY.create({
           userid: user.id,
           email: user.email,
@@ -51,7 +47,7 @@ export class LoginService {
         throw new Error();
       }
     } catch (err) {
-      throw new BadRequestException('information incorrect ');
+      throw new BadRequestException('password incorrect . try again');
     }
   }
 }

@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ContactList } from 'src/entities/contact-list.entity';
 import { ContactListDto } from './dto/contact-list.dto';
 import { UserRegister } from 'src/entities/create-user.entity';
@@ -18,14 +18,6 @@ export class ContactListService {
     tokenDto: JwtTokenInterface,
     contactListDto: ContactListDto,
   ): Promise<AddcontactResponce> {
-    const find = await this.CONTACT_LIST_REPOSITORY.findOne({
-      where: { id: tokenDto.id },
-    });
-
-    if (find && find.phonenumber == contactListDto.phonenumber) {
-      throw new ConflictException('Phonenumber Already Exists');
-    }
-
     const get = await this.CONTACT_LIST_REPOSITORY.create({
       userid: tokenDto.id,
       name: contactListDto.name,

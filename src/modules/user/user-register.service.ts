@@ -25,19 +25,21 @@ export class UserService {
       throw new ConflictException('ACCOUNT ALREADY EXISTS');
     }
 
-    const salt = 10;
-    const hashedpassword = await bcrypt.hash(registerUserDto.password, salt);
+    if (user) {
+      const salt = 10;
+      const hashedpassword = await bcrypt.hash(registerUserDto.password, salt);
 
-    try {
-      const createdUser = await this.USER_REGISTRATION_REPOSITORY.create({
-        name: registerUserDto.name,
-        email: registerUserDto.email.toLowerCase(),
-        password: hashedpassword,
-      });
+      try {
+        const createdUser = await this.USER_REGISTRATION_REPOSITORY.create({
+          name: registerUserDto.name,
+          email: registerUserDto.email.toLowerCase(),
+          password: hashedpassword,
+        });
 
-      return { data: createdUser };
-    } catch (error) {
-      return error;
+        return { data: createdUser };
+      } catch (error) {
+        return error;
+      }
     }
   }
 }
