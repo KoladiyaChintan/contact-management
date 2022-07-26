@@ -31,7 +31,7 @@ export class TransformInterceptor<T>
     return next.handle().pipe(
       map((result) => ({
         isError: false,
-        message: result.message || 'success',
+        message: result.message || '',
         data: result.data,
       })),
     );

@@ -1,17 +1,23 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { TransformInterceptor } from 'src/dispatcher/transform.interceptor';
 import { SuccessResponse } from 'src/interfaces/responce.interface';
 import { RegisterUserDto } from './dto/user-register.dto';
+import { UserRegisterResponseDto } from './dto/user.response.dto';
 import { UserService } from './user-register.service';
 
 @Controller()
+@ApiTags('User')
+@UseInterceptors(TransformInterceptor)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('user-register')
   async RegisterUser(
     @Body() registerUserDto: RegisterUserDto,
-  ): Promise<SuccessResponse<RegisterUserDto>> {
+  ): Promise<SuccessResponse<UserRegisterResponseDto>> {
     const user = await this.userService.RegisterUser(registerUserDto);
-    return user;
+    console.log(user);
+    return { data: user, message: 'User Created' };
   }
 }

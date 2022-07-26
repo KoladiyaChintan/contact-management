@@ -15,12 +15,17 @@ import { AdminGuard } from 'src/guards/admin.guard';
 import { JwtTokenInterface } from 'src/interfaces/jwt.token.interface';
 import { SuccessResponse } from 'src/interfaces/responce.interface';
 import { ContactListService } from './contact-list.service';
-import { ContactListDto } from './dto/contact-list.dto';
-import { AddcontactResponce } from './dto/contact.responce.dto';
+import { ContactListDto } from './dto/add-contact-list.request.dto';
+import { AddContactResponseDto } from './dto/add-contact.response.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { GetContactResponseDto } from './dto/get-contact.response.dto';
+import { UpdateContactResponseDto } from './dto/update-contact.response.dto';
+import { UpdateContactRequestDto } from './dto/update-contact.request.dto';
 
 @Controller('contact-list')
 @UseGuards(AdminGuard)
 @UseInterceptors(TransformInterceptor)
+@ApiTags('Contact')
 export class ContactListController {
   constructor(private readonly contactListService: ContactListService) {}
 
@@ -28,31 +33,31 @@ export class ContactListController {
   async create(
     @User() tokenDto: JwtTokenInterface,
     @Body() contactListDto: ContactListDto,
-  ): Promise<SuccessResponse<AddcontactResponce>> {
+  ): Promise<SuccessResponse<AddContactResponseDto>> {
     const data = await this.contactListService.create(tokenDto, contactListDto);
-    return { data };
+    return { data: data, message: 'contact add successfully' };
   }
 
   @Get('getlist')
   async getlist(
     @User() tokenDto: JwtTokenInterface,
-  ): Promise<SuccessResponse<any>> {
+  ): Promise<SuccessResponse<GetContactResponseDto>> {
     const data = await this.contactListService.getall(tokenDto);
-    return { data };
+    return { data: data, message: 'contact list get successfully' };
   }
 
   @Put('update/:id')
   async update(
     @Param('id') id: string,
-    @Body() contactListDto: ContactListDto,
-  ): Promise<SuccessResponse<any>> {
-    const data = await this.contactListService.update(id, contactListDto);
-    return { data };
+    @Body() updatecontactDto: UpdateContactRequestDto,
+  ): Promise<SuccessResponse<UpdateContactResponseDto>> {
+    const data = await this.contactListService.update(id, updatecontactDto);
+    return { data: data, message: 'contact update successfully' };
   }
 
   @Delete('delete/:id')
-  async delete(@Param('id') id: string): Promise<SuccessResponse<any>> {
+  async delete(@Param('id') id: string): Promise<SuccessResponse<[]>> {
     const data = await this.contactListService.delete(id);
-    return { data };
+    return { data: data, message: 'contact deleted successfully' };
   }
 }

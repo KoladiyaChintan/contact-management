@@ -5,7 +5,7 @@ import { JwtTokenInterface } from 'src/interfaces/jwt.token.interface';
 import { JwtHelper } from 'src/utils/jwt.helper';
 import { LoginDto } from './dto/login.request.dto';
 import * as bcrypt from 'bcrypt';
-import { LoginResponceDto } from './dto/login.responce.dto';
+import { LoginResponseDto } from './dto/login.response.dto';
 
 @Injectable()
 export class LoginService {
@@ -17,7 +17,7 @@ export class LoginService {
     private readonly jwtHelper: JwtHelper,
   ) {}
 
-  async Login(loginDto: LoginDto): Promise<LoginResponceDto> {
+  async Login(loginDto: LoginDto): Promise<LoginResponseDto> {
     const user = await this.USER_REGISTRATION_REPOSITORY.findOne({
       where: { email: loginDto.email },
       raw: true,
