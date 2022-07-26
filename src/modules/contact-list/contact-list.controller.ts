@@ -21,7 +21,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { GetContactResponseDto } from './dto/get-contact.response.dto';
 import { UpdateContactResponseDto } from './dto/update-contact.response.dto';
 import { UpdateContactRequestDto } from './dto/update-contact.request.dto';
-import { UserRegister } from 'src/entities/create-user.entity';
 
 @Controller('contact-list')
 @UseGuards(AdminGuard)
