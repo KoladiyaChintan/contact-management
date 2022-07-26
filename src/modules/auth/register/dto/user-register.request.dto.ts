@@ -7,7 +7,6 @@ import {
 } from 'class-validator';
 
 export class RegisterUserDto {
-  @IsNotEmpty()
   @MinLength(4)
   @MaxLength(24)
   name: string;

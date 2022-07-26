@@ -18,8 +18,9 @@ export class LoginService {
   ) {}
 
   async Login(loginDto: LoginDto): Promise<LoginResponseDto> {
+    const email = loginDto.email.toLowerCase();
     const user = await this.USER_REGISTRATION_REPOSITORY.findOne({
-      where: { email: loginDto.email },
+      where: { email },
       raw: true,
     });
     // console.log(user);

@@ -19,7 +19,7 @@ export class UserSession extends Model<UserSession> {
     defaultValue: DataType.UUIDV4,
     primaryKey: true,
   })
-  usersessionid: string;
+  id: string;
 
   @ForeignKey(() => UserRegister)
   @Column({

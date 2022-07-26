@@ -1,8 +1,8 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { UserRegister } from 'src/entities/create-user.entity';
-import { RegisterUserDto } from './dto/user-register.dto';
+import { RegisterUserDto } from './dto/user-register.request.dto';
 import * as bcrypt from 'bcrypt';
-import { UserRegisterResponseDto } from './dto/user.response.dto';
+import { UserRegisterResponseDto } from './dto/user-register.response.dto';
 
 @Injectable()
 export class UserService {
@@ -14,7 +14,7 @@ export class UserService {
   async RegisterUser(
     registerUserDto: RegisterUserDto,
   ): Promise<UserRegisterResponseDto> {
-    const email = registerUserDto.email;
+    const email = registerUserDto.email.toLowerCase();
     console.log('email', email);
     const user = await this.USER_REGISTRATION_REPOSITORY.findOne({
       // attributes: ['email'],

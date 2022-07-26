@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ContactList } from 'src/entities/contact-list.entity';
 import { ContactListDto } from './dto/add-contact-list.request.dto';
 import { UserRegister } from 'src/entities/create-user.entity';
@@ -27,13 +27,7 @@ export class ContactListService {
       email: contactListDto.email,
       phonenumber: contactListDto.phonenumber,
     });
-    try {
-      if (get) {
-        return get;
-      }
-    } catch (err) {
-      return err;
-    }
+    return get;
   }
 
   async getall(tokenDto: JwtTokenInterface): Promise<GetContactResponseDto> {
@@ -51,15 +45,26 @@ export class ContactListService {
   }
 
   async update(
-    id: string,
+    contactid: string,
+    tokenDto: JwtTokenInterface,
     updateContactDto: UpdateContactRequestDto,
   ): Promise<UpdateContactResponseDto> {
-    const get = await this.CONTACT_LIST_REPOSITORY.update(updateContactDto, {
-      where: { id },
-      returning: true,
+    const find = await this.CONTACT_LIST_REPOSITORY.findOne({
+      where: { userid: tokenDto.id, id: contactid },
     });
-    // console.log(JSON.stringify(get[1]));
-    return get[1][0];
+    if (!find) {
+      throw new BadRequestException(
+        'YOU ARE NOT ABLE TO CHANGE THIS CONTACT NUMBER',
+      );
+    }
+    await this.CONTACT_LIST_REPOSITORY.update(updateContactDto, {
+      where: { id: contactid },
+    });
+
+    const updateduser = await this.CONTACT_LIST_REPOSITORY.findOne({
+      where: { id: contactid },
+    });
+    return updateduser;
   }
 
   async delete(id: string): Promise<any> {

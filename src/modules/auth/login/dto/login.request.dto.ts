@@ -5,7 +5,6 @@ export class LoginDto {
   @IsEmail()
   email: string;
 
-  @IsNotEmpty()
   @MaxLength(24)
   @MinLength(8)
   password: string;

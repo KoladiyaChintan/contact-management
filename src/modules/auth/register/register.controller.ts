@@ -2,9 +2,9 @@ import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from 'src/dispatcher/transform.interceptor';
 import { SuccessResponse } from 'src/interfaces/responce.interface';
-import { RegisterUserDto } from './dto/user-register.dto';
-import { UserRegisterResponseDto } from './dto/user.response.dto';
-import { UserService } from './user-register.service';
+import { RegisterUserDto } from './dto/user-register.request.dto';
+import { UserRegisterResponseDto } from './dto/user-register.response.dto';
+import { UserService } from './register.service';
 
 @Controller()
 @ApiTags('User')

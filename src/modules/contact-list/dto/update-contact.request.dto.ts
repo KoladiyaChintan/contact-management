@@ -7,12 +7,10 @@ import {
 } from 'class-validator';
 
 export class UpdateContactRequestDto {
-  @IsNotEmpty()
   @MaxLength(24)
   @MinLength(4)
   name: string;
 
-  @IsNotEmpty()
   @IsEmail()
   @MaxLength(255)
   email: string;

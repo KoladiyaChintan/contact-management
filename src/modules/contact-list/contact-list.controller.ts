@@ -21,6 +21,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { GetContactResponseDto } from './dto/get-contact.response.dto';
 import { UpdateContactResponseDto } from './dto/update-contact.response.dto';
 import { UpdateContactRequestDto } from './dto/update-contact.request.dto';
+import { UserRegister } from 'src/entities/create-user.entity';
 
 @Controller('contact-list')
 @UseGuards(AdminGuard)
@@ -49,14 +50,19 @@ export class ContactListController {
   @Put('update/:id')
   async update(
     @Param('id') id: string,
+    @User() tokenDto: JwtTokenInterface,
     @Body() updatecontactDto: UpdateContactRequestDto,
   ): Promise<SuccessResponse<UpdateContactResponseDto>> {
-    const data = await this.contactListService.update(id, updatecontactDto);
+    const data = await this.contactListService.update(
+      id,
+      tokenDto,
+      updatecontactDto,
+    );
     return { data: data, message: 'contact update successfully' };
   }
 
   @Delete('delete/:id')
-  async delete(@Param('id') id: string): Promise<SuccessResponse<[]>> {
+  async delete(@Param('id') id: string): Promise<SuccessResponse<void>> {
     const data = await this.contactListService.delete(id);
     return { data: data, message: 'contact deleted successfully' };
   }
