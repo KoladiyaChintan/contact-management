@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Param, Post, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from 'src/dispatcher/transform.interceptor';
 import { SuccessResponse } from 'src/interfaces/responce.interface';
@@ -17,7 +17,12 @@ export class UserController {
     @Body() registerUserDto: RegisterUserDto,
   ): Promise<SuccessResponse<UserRegisterResponseDto>> {
     const user = await this.userService.RegisterUser(registerUserDto);
-    console.log(user);
     return { data: user, message: 'User Created' };
+  }
+
+  @Post('verify-user/:token')
+  async verifyUser(@Param('token') token: string) {
+    const verify = await this.userService.verify(token);
+    return verify;
   }
 }

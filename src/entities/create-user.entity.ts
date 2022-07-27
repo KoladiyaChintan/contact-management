@@ -29,6 +29,12 @@ export class UserRegister extends Model<UserRegister> {
   })
   password: string;
 
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  is_verified: boolean;
+
   @HasMany(() => ContactList)
   contactlist: ContactList[];
 }
