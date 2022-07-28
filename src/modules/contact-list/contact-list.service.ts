@@ -21,17 +21,17 @@ export class ContactListService {
     tokenDto: JwtTokenInterface,
     contactListDto: ContactListDto,
   ): Promise<AddContactResponseDto> {
-    const get = await this.CONTACT_LIST_REPOSITORY.create({
+    const data = await this.CONTACT_LIST_REPOSITORY.create({
       userid: tokenDto.id,
       name: contactListDto.name,
       email: contactListDto.email,
       phonenumber: contactListDto.phonenumber,
     });
-    return get;
+    return new AddContactResponseDto(data);
   }
 
   async getall(tokenDto: JwtTokenInterface): Promise<GetContactResponseDto> {
-    const get = await this.USER_REGISTRATION_REPOSITORY.findOne({
+    const data = await this.USER_REGISTRATION_REPOSITORY.findOne({
       where: { id: tokenDto.id },
       attributes: ['id', 'name', 'email'],
       include: [
@@ -41,7 +41,7 @@ export class ContactListService {
         },
       ],
     });
-    return get;
+    return new GetContactResponseDto(data);
   }
 
   async update(
@@ -64,7 +64,7 @@ export class ContactListService {
     const updateduser = await this.CONTACT_LIST_REPOSITORY.findOne({
       where: { id: contactid },
     });
-    return updateduser;
+    return new UpdateContactResponseDto(updateduser);
   }
 
   async delete(id: string): Promise<any> {

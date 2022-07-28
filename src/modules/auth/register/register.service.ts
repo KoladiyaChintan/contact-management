@@ -33,29 +33,25 @@ export class UserService {
       throw new ConflictException('ACCOUNT ALREADY EXISTS');
     }
 
-    try {
-      const salt = 10;
-      const hashedpassword = await bcrypt.hash(registerUserDto.password, salt);
-      const createdUser = await this.USER_REGISTRATION_REPOSITORY.create(
-        {
-          name: registerUserDto.name,
-          email: registerUserDto.email.toLowerCase(),
-          password: hashedpassword,
-        },
-        {
-          returning: true,
-        },
-      );
+    const salt = 10;
+    const hashedpassword = await bcrypt.hash(registerUserDto.password, salt);
+    const createdUser = await this.USER_REGISTRATION_REPOSITORY.create(
+      {
+        name: registerUserDto.name,
+        email: registerUserDto.email.toLowerCase(),
+        password: hashedpassword,
+      },
+      {
+        returning: true,
+      },
+    );
 
-      await this.sendgridService.sendVerifyUserMail({
-        userid: createdUser.id,
-        email: email,
-      });
+    await this.sendgridService.sendVerifyUserMail({
+      userid: createdUser.id,
+      email: email,
+    });
 
-      return createdUser;
-    } catch (error) {
-      return error;
-    }
+    return createdUser;
   }
 
   async verify(token: string) {
@@ -74,7 +70,6 @@ export class UserService {
           where: { id: findUserToken.userid },
         },
       );
-      console.log(verifyuser);
       return [];
     } else {
       throw new BadRequestException('USER NOT VERIFIED');
