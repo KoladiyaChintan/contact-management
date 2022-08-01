@@ -23,6 +23,11 @@ export class LoginService {
       where: { email },
       raw: true,
     });
+
+    if (user.is_verified == false) {
+      throw new BadRequestException('PLEASE VERIFIED USER');
+    }
+
     // console.log(user);
     if (!user) {
       throw new BadRequestException('your email is incorrect . try again');

@@ -21,7 +21,9 @@ export class UserController {
   }
 
   @Post('verify-user/:token')
-  async verifyUser(@Param('token') token: string) {
+  async verifyUser(
+    @Param('token') token: string,
+  ): Promise<SuccessResponse<any>> {
     const verify = await this.userService.verify(token);
     return verify;
   }

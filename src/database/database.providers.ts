@@ -27,16 +27,6 @@ export const databaseProviders = [
       sequelize.addModels([ContactList, UserRegister, UserSession, UserVerify]);
 
       await sequelize.sync({ force: false });
-      // .then(async () => {
-      //   return await DatabaseSeeder.run();
-      // })
-      // .then(() => {
-      //   console.log('********** Successfully seeded db **********');
-      // })
-      // .catch((err: any) => {
-      //   console.log(err);
-      //   console.log('********** Error in database sedding **********');
-      // });
 
       return sequelize;
     },

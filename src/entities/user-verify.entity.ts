@@ -1,5 +1,4 @@
 import {
-  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -29,7 +28,4 @@ export class UserVerify extends Model<UserVerify> {
     type: DataType.STRING,
   })
   randomtoken: string;
-
-  // @BelongsTo(() => UserRegister)
-  // userRegister: UserRegister;
 }

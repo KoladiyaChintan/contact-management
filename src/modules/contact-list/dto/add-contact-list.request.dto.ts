@@ -17,7 +17,7 @@ export class ContactListDto {
 
   @IsNotEmpty()
   @Matches(/^[0-9]{10}$/, {
-    message: 'password is must be a 10 ',
+    message: 'Phone number is must be a 10 ',
   })
   phonenumber: string;
 }

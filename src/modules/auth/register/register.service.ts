@@ -51,10 +51,10 @@ export class UserService {
       email: email,
     });
 
-    return createdUser;
+    return new UserRegisterResponseDto(createdUser);
   }
 
-  async verify(token: string) {
+  async verify(token: string): Promise<any> {
     const findUserToken = await this.USER_VERIFY_REPOSITORY.findOne({
       where: {
         randomtoken: token,
@@ -62,7 +62,7 @@ export class UserService {
     });
 
     if (findUserToken && findUserToken.randomtoken == token) {
-      const verifyuser = await this.USER_REGISTRATION_REPOSITORY.update(
+      await this.USER_REGISTRATION_REPOSITORY.update(
         {
           is_verified: true,
         },
@@ -70,7 +70,7 @@ export class UserService {
           where: { id: findUserToken.userid },
         },
       );
-      return [];
+      return { message: 'USER VERIFIED' };
     } else {
       throw new BadRequestException('USER NOT VERIFIED');
     }
