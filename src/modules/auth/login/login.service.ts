@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { UserRegister } from 'src/entities/create-user.entity';
-import { UserSession } from 'src/entities/user-session.entity';
-import { JwtTokenInterface } from 'src/interfaces/jwt.token.interface';
-import { JwtHelper } from 'src/utils/jwt.helper';
+import { UserRegister } from '../../../entities/create-user.entity';
+import { UserSession } from '../../../entities/user-session.entity';
+import { JwtTokenInterface } from '../../../interfaces/jwt.token.interface';
+import { JwtHelper } from '../../../utils/jwt.helper';
 import { LoginDto } from './dto/login.request.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginResponseDto } from './dto/login.response.dto';

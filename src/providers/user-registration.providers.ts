@@ -1,4 +1,4 @@
-import { UserRegister } from 'src/entities/create-user.entity';
+import { UserRegister } from '../entities/create-user.entity';
 
 export const UserRegisterProvider = [
   {

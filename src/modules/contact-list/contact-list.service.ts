@@ -1,12 +1,12 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { ContactList } from 'src/entities/contact-list.entity';
+import { ContactList } from '../../entities/contact-list.entity';
 import { ContactListDto } from './dto/add-contact-list.request.dto';
-import { UserRegister } from 'src/entities/create-user.entity';
-import { JwtTokenInterface } from 'src/interfaces/jwt.token.interface';
+import { UserRegister } from '../../entities/create-user.entity';
 import { AddContactResponseDto } from './dto/add-contact.response.dto';
 import { GetContactResponseDto } from './dto/get-contact.response.dto';
 import { UpdateContactResponseDto } from './dto/update-contact.response.dto';
 import { UpdateContactRequestDto } from './dto/update-contact.request.dto';
+import { JwtTokenInterface } from '../../interfaces/jwt.token.interface';
 
 @Injectable()
 export class ContactListService {

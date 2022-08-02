@@ -9,11 +9,11 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { User } from 'src/decorators/caller.decorator';
-import { TransformInterceptor } from 'src/dispatcher/transform.interceptor';
-import { AdminGuard } from 'src/guards/admin.guard';
-import { JwtTokenInterface } from 'src/interfaces/jwt.token.interface';
-import { SuccessResponse } from 'src/interfaces/responce.interface';
+import { User } from '../../decorators/caller.decorator';
+import { TransformInterceptor } from '../../dispatcher/transform.interceptor';
+import { AdminGuard } from '../../guards/admin.guard';
+import { JwtTokenInterface } from '../../interfaces/jwt.token.interface';
+import { SuccessResponse } from '../../interfaces/responce.interface';
 import { ContactListService } from './contact-list.service';
 import { ContactListDto } from './dto/add-contact-list.request.dto';
 import { AddContactResponseDto } from './dto/add-contact.response.dto';

@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize-typescript';
-import { ContactList } from 'src/entities/contact-list.entity';
-import { UserRegister } from 'src/entities/create-user.entity';
-import { UserSession } from 'src/entities/user-session.entity';
-import { UserVerify } from 'src/entities/user-verify.entity';
+import { ContactList } from '../entities/contact-list.entity';
+import { UserRegister } from '../entities/create-user.entity';
+import { UserSession } from '../entities/user-session.entity';
+import { UserVerify } from '../entities/user-verify.entity';
 
 export const databaseProviders = [
   {

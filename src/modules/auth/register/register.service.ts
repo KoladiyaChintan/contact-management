@@ -4,12 +4,12 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { UserRegister } from 'src/entities/create-user.entity';
+import { UserRegister } from '../../../entities/create-user.entity';
 import { RegisterUserDto } from './dto/user-register.request.dto';
 import * as bcrypt from 'bcrypt';
 import { UserRegisterResponseDto } from './dto/user-register.response.dto';
-import { SendGridService } from 'src/lid/sendgrid';
-import { UserVerify } from 'src/entities/user-verify.entity';
+import { SendGridService } from '../../../lid/sendgrid';
+import { UserVerify } from '../../../entities/user-verify.entity';
 
 @Injectable()
 export class UserService {

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserVerify } from 'src/entities/user-verify.entity';
+import { UserVerify } from '../entities/user-verify.entity';
 import * as sgMail from '@sendgrid/mail';
 import * as random from 'random-token';
 

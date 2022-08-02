@@ -1,5 +1,5 @@
-import { ContactList } from 'src/entities/contact-list.entity';
-import { UserRegister } from 'src/entities/create-user.entity';
+import { ContactList } from '../../../entities/contact-list.entity';
+import { UserRegister } from '../../../entities/create-user.entity';
 
 export class GetContactResponseDto {
   readonly id: string;

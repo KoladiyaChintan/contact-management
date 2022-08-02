@@ -1,4 +1,4 @@
-import { ContactList } from 'src/entities/contact-list.entity';
+import { ContactList } from '../../../entities/contact-list.entity';
 
 export class UpdateContactResponseDto {
   readonly id: string;

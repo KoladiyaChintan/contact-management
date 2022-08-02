@@ -1,4 +1,4 @@
-import { UserSession } from 'src/entities/user-session.entity';
+import { UserSession } from '../entities/user-session.entity';
 
 export const UserSessionProvider = [
   {
