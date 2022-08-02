@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { JwtTokenInterface } from 'src/interfaces/jwt.token.interface';
+import { JwtTokenInterface } from '../interfaces/jwt.token.interface';
 import * as jwt from 'jsonwebtoken';
-import { UserRegister } from 'src/entities/create-user.entity';
-import { UserSession } from 'src/entities/user-session.entity';
+import { UserRegister } from '../entities/create-user.entity';
+import { UserSession } from '../entities/user-session.entity';
 
 @Injectable()
 export class JwtHelper {
   public async generateToken(tokenDto: JwtTokenInterface): Promise<string> {
     const token = jwt.sign(tokenDto, process.env.JWT_SECRET, {
-      expiresIn: '60h',
+      expiresIn: '24h',
     });
     return token;
   }
