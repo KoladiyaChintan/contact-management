@@ -1,5 +1,5 @@
 import { Controller, Post, Req, UseInterceptors } from '@nestjs/common';
-import { ApiBasicAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '../../../dispatcher/transform.interceptor';
 import { SuccessResponse } from '../../../interfaces/responce.interface';
 import { JwtHelper } from '../../../utils/jwt.helper';
@@ -7,7 +7,7 @@ import { LogoutService } from './logout.service';
 
 @Controller()
 @ApiTags('User')
-@ApiBasicAuth()
+@ApiBearerAuth()
 @UseInterceptors(TransformInterceptor)
 export class LogoutController {
   constructor(

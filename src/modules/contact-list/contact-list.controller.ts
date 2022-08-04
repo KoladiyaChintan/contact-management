@@ -17,7 +17,7 @@ import { SuccessResponse } from '../../interfaces/responce.interface';
 import { ContactListService } from './contact-list.service';
 import { ContactListDto } from './dto/add-contact-list.request.dto';
 import { AddContactResponseDto } from './dto/add-contact.response.dto';
-import { ApiBasicAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { GetContactResponseDto } from './dto/get-contact.response.dto';
 import { UpdateContactResponseDto } from './dto/update-contact.response.dto';
 import { UpdateContactRequestDto } from './dto/update-contact.request.dto';
@@ -25,7 +25,7 @@ import { UpdateContactRequestDto } from './dto/update-contact.request.dto';
 @Controller('contact-list')
 @UseGuards(AdminGuard)
 @UseInterceptors(TransformInterceptor)
-@ApiBasicAuth()
+@ApiBearerAuth()
 @ApiTags('Contact')
 export class ContactListController {
   constructor(private readonly contactListService: ContactListService) {}
