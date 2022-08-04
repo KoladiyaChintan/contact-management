@@ -7,7 +7,7 @@ import { LoginResponseDto } from './dto/login.response.dto';
 import { LoginService } from './login.service';
 
 @Controller()
-@ApiTags('login')
+@ApiTags('User')
 @UseInterceptors(TransformInterceptor)
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}
