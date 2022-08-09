@@ -3,17 +3,20 @@ import {
   ConflictException,
   Inject,
   Injectable,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { UserRegister } from '../../../entities/create-user.entity';
 import { RegisterUserDto } from './dto/user-register.request.dto';
 import * as bcrypt from 'bcrypt';
 import { UserRegisterResponseDto } from './dto/user-register.response.dto';
-import { SendGridService } from '../../../lid/sendgrid';
+import { SendGridService } from '../../../lib/sendgrid';
 import { UserVerify } from '../../../entities/user-verify.entity';
+import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class UserService {
   constructor(
+    @Inject('SEQUELIZE') private readonly SEQUELIZE: Sequelize,
     @Inject('USER_REGISTRATION_REPOSITORY')
     private readonly USER_REGISTRATION_REPOSITORY: typeof UserRegister,
     @Inject('USER_VERIFY_REPOSITORY')
@@ -33,25 +36,32 @@ export class UserService {
       throw new ConflictException('ACCOUNT ALREADY EXISTS');
     }
 
-    const salt = 10;
-    const hashedpassword = await bcrypt.hash(registerUserDto.password, salt);
-    const createdUser = await this.USER_REGISTRATION_REPOSITORY.create(
-      {
-        name: registerUserDto.name,
-        email: registerUserDto.email.toLowerCase(),
-        password: hashedpassword,
-      },
-      {
-        returning: true,
-      },
-    );
+    const t1 = await this.SEQUELIZE.transaction();
+    try {
+      const salt = 10;
+      const hashedpassword = await bcrypt.hash(registerUserDto.password, salt);
+      const createdUser = await this.USER_REGISTRATION_REPOSITORY.create(
+        {
+          name: registerUserDto.name,
+          email: registerUserDto.email.toLowerCase(),
+          password: hashedpassword,
+        },
+        {
+          returning: true,
+        },
+      );
 
-    await this.sendgridService.sendVerifyUserMail({
-      userid: createdUser.id,
-      email: email,
-    });
+      await this.sendgridService.sendVerifyUserMail({
+        userid: createdUser.id,
+        email: email,
+      });
 
-    return new UserRegisterResponseDto(createdUser);
+      await t1.commit();
+      return createdUser;
+    } catch (error) {
+      await t1.rollback();
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async verify(token: string): Promise<any> {
